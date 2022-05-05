@@ -3,6 +3,7 @@ package utils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import models.*;
 
@@ -124,6 +125,39 @@ public class DataProcessor {
                         StringBuilder::append)
                 .toString();
 
+        _sb.setLength(0);
+        return result;
+    }
+
+    public String searchProductsForLastMonth(LocalDate startDate, LocalDate endDate) {
+        var allProducts = _ordersHistory
+                .stream()
+                .filter(o -> (o.getDate().isAfter(startDate) || o.getDate().isEqual(startDate)) &&
+                        (o.getDate().isBefore(endDate) || o.getDate().isEqual(endDate)))
+                .flatMap(o -> o.getProductOrders()
+                        .stream()
+                        .map(po -> {
+                            record productStats(String productName, BigDecimal totalPrice, Integer quantity) {
+                            }
+                            return new productStats(
+                                    po.getProduct().getName(),
+                                    po.getTotalPrice(),
+                                    po.getQuantity());
+                        }))
+                .collect(Collectors.groupingBy(x -> x.productName, Collectors.toList()));
+
+        for (var key : allProducts.keySet()) {
+            var productCount = allProducts.get(key).stream()
+                    .mapToInt(x -> x.quantity).sum();
+            var endPrice = allProducts.get(key).stream()
+                    .mapToDouble(x -> x.totalPrice.doubleValue()).sum();
+
+            _sb.append(String.format("Product name: %s, ", key));
+            _sb.append(String.format("Product count: %d, ", productCount));
+            _sb.append(String.format("Total price: $%.2f\n", endPrice));
+        }
+
+        var result = _sb.toString();
         _sb.setLength(0);
         return result;
     }
