@@ -1,10 +1,8 @@
 import utils.*;
 
-import java.io.Console;
-
 public class Client {
     public static void main(String[] args) {
-        //populate products list
+//0. Populate products list
         var foodProducts = Administrator.populateFoodProducts();
         var ordersHistory = Playwright.createRandomOrderHistory(foodProducts);
         var dataProcessor = new DataProcessor(foodProducts, ordersHistory);
