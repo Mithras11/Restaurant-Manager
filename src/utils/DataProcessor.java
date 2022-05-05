@@ -86,6 +86,7 @@ public class DataProcessor {
                 .forEach(o -> _sb.append(String.format(
                         "Order number - %s, Total price - $%.2f\n",
                         o.getOrderNumber(), o.getTotalPrice().doubleValue())));
+
         var result = _sb.toString();
         _sb.setLength(0);
         return result;
