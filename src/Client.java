@@ -35,5 +35,10 @@ public class Client {
         System.out.println(ordersByProduct);
         System.out.println("===============");
 
+//5. Search by order number
+        System.out.println("5. Search by order number");
+        var ordersByNumber = dataProcessor.searchByOrderNumber(1);
+        System.out.println(ordersByNumber);
+        System.out.println("===============");
     }
 }

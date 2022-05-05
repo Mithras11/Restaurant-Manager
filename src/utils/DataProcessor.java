@@ -89,4 +89,20 @@ public class DataProcessor {
         return result;
     }
 
+    public String searchByOrderNumber(int orderNumber) {
+        var result = _ordersHistory
+                .stream()
+                .filter(o -> o.getOrderNumber() == orderNumber)
+                .reduce(_sb, (acc, o) -> {
+                            o.getProductOrders()
+                                    .forEach(po -> acc.append(String.format("%s - $%s\n",
+                                            po.getProduct().getName(), po.getProduct().getPrice().doubleValue())));
+                            return acc;
+                        },
+                        StringBuilder::append)
+                .toString();
+
+        _sb.setLength(0);
+        return result;
+    }
 }
