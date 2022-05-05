@@ -22,11 +22,15 @@ public class OrderLog {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public Collection<ProductOrder> getProductOrders() {
-        return _productOrders;
-    }
-
     public int getOrderNumber() {
         return _orderNumber;
+    }
+
+    public LocalDate getDate() {
+        return _date;
+    }
+
+    public Collection<ProductOrder> getProductOrders() {
+        return _productOrders;
     }
 }

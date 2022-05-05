@@ -1,6 +1,8 @@
 import utils.*;
 
 import java.io.Console;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 
 public class Client {
     public static void main(String[] args) {
@@ -39,6 +41,22 @@ public class Client {
         System.out.println("5. Search by order number");
         var ordersByNumber = dataProcessor.searchByOrderNumber(1);
         System.out.println(ordersByNumber);
+        System.out.println("===============");
+
+//6. Search sold products during a period
+        System.out.println("6. Search sold products during a period");
+        var ordersByPeriod = dataProcessor.searchOrdersByPeriod(
+                LocalDate.of(2022, 02, 15),
+                LocalDate.of(2022, 02, 17));
+        System.out.println(ordersByPeriod);
+        System.out.println("===============");
+
+//7. Search sold products for the last month
+        System.out.println("7. Search sold products for the last month");
+        var allProducts = dataProcessor.searchProductsForLastMonth(
+                LocalDate.of(2022, 02, 15),
+                LocalDate.of(2022, 02, 28));
+        System.out.println(allProducts);
         System.out.println("===============");
     }
 }

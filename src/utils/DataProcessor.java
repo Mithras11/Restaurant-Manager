@@ -1,7 +1,9 @@
 package utils;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import models.*;
 
@@ -98,6 +100,26 @@ public class DataProcessor {
                                     .forEach(po -> acc.append(String.format("%s - $%s\n",
                                             po.getProduct().getName(),
                                             po.getProduct().getPrice().doubleValue())));
+                            return acc;
+                        },
+                        StringBuilder::append)
+                .toString();
+
+        _sb.setLength(0);
+        return result;
+    }
+
+    public String searchOrdersByPeriod(LocalDate startDate, LocalDate endDate) {
+        var result = _ordersHistory
+                .stream()
+                .filter(o -> (o.getDate().isAfter(startDate) || o.getDate().isEqual(startDate)) &&
+                        (o.getDate().isBefore(endDate) || o.getDate().isEqual(endDate)))
+                .sorted(Comparator.comparing(OrderLog::getDate))
+                .reduce(_sb, (acc, o) -> {
+                            o.getProductOrders()
+                                    .forEach(po -> acc.append(String.format("%s - %s\n",
+                                            po.getProduct().getName(),
+                                            o.getDate())));
                             return acc;
                         },
                         StringBuilder::append)
