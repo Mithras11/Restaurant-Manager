@@ -6,7 +6,7 @@ import java.util.List;
 import models.*;
 
 public class DataProcessor {
-    private List<FoodProduct> _foodProducts;
+    private final List<FoodProduct> _foodProducts;
     private List<OrderLog> _ordersHistory;
     private StringBuilder _sb;
 
@@ -29,14 +29,46 @@ public class DataProcessor {
     }
 
     public void updatePrice(String name) {
-        var product = _foodProducts
+        _foodProducts
                 .stream()
                 .filter(x -> x.getName().equals(name))
                 .findFirst()
-                .orElse(null);
+                .ifPresent(product
+                        -> product.setPrice(product.getPrice()
+                        .add(BigDecimal.ONE)));
+    }
 
-        if (product != null) {
-            product.setPrice(product.getPrice().add(BigDecimal.ONE));
-        }
+    public String getEnabledProducts() {
+        _foodProducts
+                .stream()
+                .filter(FoodProduct::getIsEnabled)
+                .forEach(p -> _sb.append(String.format("%s  - isEnabled = %b\n",
+                        p.getName(), p.getIsEnabled())));
+
+        var result = _sb.toString();
+        _sb.setLength(0);
+        return result;
+    }
+
+    public String getProductByPartOfName(String wildcard) {
+        _foodProducts
+                .stream()
+                .filter(p -> p.getName().contains(wildcard))
+                .forEach(p -> _sb.append(String.format("%s\n", p.getName())));
+
+        var result = _sb.toString();
+        _sb.setLength(0);
+        return result;
+    }
+
+    public String getProductsWithRice() {
+        _foodProducts
+                .stream()
+                .filter(p -> p.getIngredients().contains("Rice"))
+                .forEach(p -> _sb.append(String.format("%s\n", p.getName())));
+
+        var result = _sb.toString();
+        _sb.setLength(0);
+        return result;
     }
 }
