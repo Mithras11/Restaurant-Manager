@@ -96,7 +96,8 @@ public class DataProcessor {
                 .reduce(_sb, (acc, o) -> {
                             o.getProductOrders()
                                     .forEach(po -> acc.append(String.format("%s - $%s\n",
-                                            po.getProduct().getName(), po.getProduct().getPrice().doubleValue())));
+                                            po.getProduct().getName(),
+                                            po.getProduct().getPrice().doubleValue())));
                             return acc;
                         },
                         StringBuilder::append)
