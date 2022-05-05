@@ -1,7 +1,7 @@
 package utils;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
 
 import models.*;
 
@@ -23,7 +23,8 @@ public class DataProcessor {
     public FoodProduct findProductByName(String productName) {
         return _foodProducts
                 .stream()
-                .filter(x -> x.getName().startsWith(productName))
+                .filter(x -> x.getName().toLowerCase()
+                        .startsWith(productName.toLowerCase()))
                 .findFirst()
                 .orElse(null);
     }
@@ -31,7 +32,7 @@ public class DataProcessor {
     public void updatePrice(String name) {
         _foodProducts
                 .stream()
-                .filter(x -> x.getName().equals(name))
+                .filter(x -> x.getName().equalsIgnoreCase(name))
                 .findFirst()
                 .ifPresent(product
                         -> product.setPrice(product.getPrice()
@@ -53,7 +54,8 @@ public class DataProcessor {
     public String getProductByPartOfName(String wildcard) {
         _foodProducts
                 .stream()
-                .filter(p -> p.getName().contains(wildcard))
+                .filter(p -> p.getName().toLowerCase()
+                        .contains(wildcard.toLowerCase()))
                 .forEach(p -> _sb.append(String.format("%s\n", p.getName())));
 
         var result = _sb.toString();
@@ -63,7 +65,7 @@ public class DataProcessor {
 
     public String getProductsWithRice() {
         _foodProducts
-                .stream()
+                .stream()       //Contains operator for collections is case insensitive by default
                 .filter(p -> p.getIngredients().contains("Rice"))
                 .forEach(p -> _sb.append(String.format("%s\n", p.getName())));
 
@@ -71,4 +73,19 @@ public class DataProcessor {
         _sb.setLength(0);
         return result;
     }
+
+    public String searchOrdersByProduct(String productName) {
+        _ordersHistory
+                .stream()
+                .filter(o -> o.getProductOrders().stream()
+                        .anyMatch(po -> po.getProduct().getName()
+                                .equalsIgnoreCase(productName)))
+                .forEach(o -> _sb.append(String.format(
+                        "Order number - %s, Total price - $%.2f\n",
+                        o.getOrderNumber(), o.getTotalPrice().doubleValue())));
+        var result = _sb.toString();
+        _sb.setLength(0);
+        return result;
+    }
+
 }
