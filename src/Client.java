@@ -29,5 +29,11 @@ public class Client {
         System.out.println(productsWithRice);
         System.out.println("===============");
 
+//4. Search orders by product
+        System.out.println("4. Search orders by product");
+        var ordersByProduct = dataProcessor.searchOrdersByProduct("Coca-Cola");
+        System.out.println(ordersByProduct);
+        System.out.println("===============");
+
     }
 }

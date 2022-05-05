@@ -5,9 +5,9 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class OrderLog {
-    private int _orderNumber;
-    private LocalDate _date;
-    private Collection<ProductOrder> _productOrders;
+    private final int _orderNumber;
+    private final LocalDate _date;
+    private final Collection<ProductOrder> _productOrders;
 
     public OrderLog(
             int orderNumber, LocalDate date, Collection<ProductOrder> productOrders) {
@@ -20,5 +20,13 @@ public class OrderLog {
         return _productOrders.stream()
                 .map(ProductOrder::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public Collection<ProductOrder> getProductOrders() {
+        return _productOrders;
+    }
+
+    public int getOrderNumber() {
+        return _orderNumber;
     }
 }
