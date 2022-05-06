@@ -9,10 +9,10 @@
             this.TotalPrice = product.Price * quantity;
         }
 
-        public FoodProduct Product { get; set; }
+        public FoodProduct Product { get; }
 
-        public int Quantity { get; set; }
+        public int Quantity { get; }
 
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice { get; }
     }
 }

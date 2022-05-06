@@ -8,9 +8,9 @@
             this.Date = date;
             this.ProductOrders = productOrder;
         }
-        public int OrderNumber { get; set; }
+        public int OrderNumber { get; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; }
 
         public ICollection<ProductOrder> ProductOrders { get; set; }
 

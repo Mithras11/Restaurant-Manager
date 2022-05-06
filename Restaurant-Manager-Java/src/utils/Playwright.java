@@ -1,6 +1,6 @@
 package utils;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.*;
 
 import models.*;
@@ -14,14 +14,14 @@ public class Playwright {
         var orderedCocaCola = dataProcessor.findProductByName("Coca");
 
         var firstOrder = new OrderLog(
-                1, LocalDate.of(2022, 02, 15),
+                1, LocalDate.of(2022, Month.FEBRUARY, 15),
                 Arrays.asList(
                         new ProductOrder(orderedChicken, 2),
                         new ProductOrder(orderedSpinachSoup, 1)
                 ));
 
         var secondOrder = new OrderLog(
-                2, LocalDate.of(2022, 02, 15),
+                2, LocalDate.of(2022, Month.FEBRUARY, 15),
                 Arrays.asList(
                         new ProductOrder(orderedCocaCola, 1)
                 ));
@@ -33,7 +33,7 @@ public class Playwright {
 
         var cocaColaWithNewPrice = dataProcessor.findProductByName("Coca");
         var thirdOrder = new OrderLog(
-                3, LocalDate.of(2022, 02, 16),
+                3, LocalDate.of(2022, Month.FEBRUARY, 16),
                 Arrays.asList(
                         new ProductOrder(cocaColaWithNewPrice, 1)
                 ));
@@ -45,7 +45,7 @@ public class Playwright {
 
         var cocaColaWithThirdPrice = dataProcessor.findProductByName("Coca");
         var fourthOrder = new OrderLog(
-                4, LocalDate.of(2022, 02, 23),
+                4, LocalDate.of(2022, Month.FEBRUARY, 23),
                 Arrays.asList(
                         new ProductOrder(cocaColaWithThirdPrice, 1)
                 ));

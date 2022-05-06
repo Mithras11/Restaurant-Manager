@@ -7,7 +7,8 @@ import java.util.*;
 public class OrderLog {
     private final int _orderNumber;
     private final LocalDate _date;
-    private final Collection<ProductOrder> _productOrders;
+
+    private Collection<ProductOrder> _productOrders;
 
     public OrderLog(
             int orderNumber, LocalDate date, Collection<ProductOrder> productOrders) {
@@ -32,5 +33,9 @@ public class OrderLog {
 
     public Collection<ProductOrder> getProductOrders() {
         return _productOrders;
+    }
+
+    public void setProductOrders(Collection<ProductOrder> productOrders) {
+        this._productOrders = productOrders;
     }
 }
