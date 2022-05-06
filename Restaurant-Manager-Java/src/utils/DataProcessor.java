@@ -8,7 +8,6 @@ import java.util.*;
 
 import models.*;
 
-
 public class DataProcessor {
     private final List<FoodProduct> _foodProducts;
     private List<OrderLog> _ordersHistory;
