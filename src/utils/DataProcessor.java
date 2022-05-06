@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import models.*;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class DataProcessor {
     private final List<FoodProduct> _foodProducts;
     private List<OrderLog> _ordersHistory;
@@ -67,7 +69,7 @@ public class DataProcessor {
 
     public String getProductsWithRice() {
         _foodProducts
-                .stream()       //Contains operator for collections is case insensitive by default
+                .stream()       //Contains operator for collections is case-insensitive by default
                 .filter(p -> p.getIngredients().contains("Rice"))
                 .forEach(p -> _sb.append(String.format("%s\n", p.getName())));
 
@@ -145,7 +147,8 @@ public class DataProcessor {
                                     po.getTotalPrice(),
                                     po.getQuantity());
                         }))
-                .collect(Collectors.groupingBy(x -> x.productName, Collectors.toList()));
+                .collect(Collectors.groupingBy(x -> x.productName,
+                        TreeMap::new, Collectors.toList()));
 
         for (var key : allProducts.keySet()) {
             var productCount = allProducts.get(key).stream()
@@ -156,6 +159,38 @@ public class DataProcessor {
             _sb.append(String.format("Product name: %s, ", key));
             _sb.append(String.format("Product count: %d, ", productCount));
             _sb.append(String.format("Total price: $%.2f\n", endPrice));
+        }
+
+        var result = _sb.toString();
+        _sb.setLength(0);
+        return result;
+    }
+
+    public Double searchAverageOrdersForLastMonth(LocalDate startDate, LocalDate endDate) {
+        var allOrders = _ordersHistory
+                .stream()
+                .filter(o -> (o.getDate().isAfter(startDate) || o.getDate().isEqual(startDate))
+                        && o.getDate().isBefore(endDate))
+                .collect(Collectors.groupingBy(OrderLog::getDate, Collectors.toList()));
+
+        var totalDays = DAYS.between(startDate, endDate);
+        var ordersTotalCount = allOrders.values().stream()
+                .mapToInt(List::size).sum();
+
+        return ordersTotalCount * 1.0 / totalDays;
+    }
+
+    public String getTotalOrderAmountPerMonth(LocalDate startDate, LocalDate endDate) {
+        var allOrders = _ordersHistory
+                .stream()
+                .filter(o -> (o.getDate().isAfter(startDate) || o.getDate().isEqual(startDate))
+                        && o.getDate().isBefore(endDate))
+                .collect(Collectors.groupingBy(OrderLog::getDate,
+                        TreeMap::new, Collectors.toList()));
+
+        for (var key : allOrders.keySet()) {
+            _sb.append(String.format("Day of month: %td - Amount of orders: %d\n",
+                    key, allOrders.get(key).size()));
         }
 
         var result = _sb.toString();
