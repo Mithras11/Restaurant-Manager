@@ -2,9 +2,9 @@ package utils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import static java.time.temporal.ChronoUnit.DAYS;
-import java.util.*;
+import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
+import java.util.*;
 
 import models.*;
 
@@ -173,7 +173,7 @@ public class DataProcessor {
                         && o.getDate().isBefore(endDate))
                 .collect(Collectors.groupingBy(OrderLog::getDate, Collectors.toList()));
 
-        var totalDays = DAYS.between(startDate, endDate);
+        var totalDays = ChronoUnit.DAYS.between(startDate, endDate);
         var ordersTotalCount = allOrders.values().stream()
                 .mapToInt(List::size).sum();
 

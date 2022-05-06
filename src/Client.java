@@ -1,6 +1,6 @@
-import utils.*;
-
 import java.time.*;
+
+import utils.*;
 
 public class Client {
     public static void main(String[] args) {
@@ -58,7 +58,7 @@ public class Client {
         System.out.println("===============");
 
 //8. Search average orders amount for the last month
-        System.out.println("8. Search average orders amount for the last month");
+        System.out.println("8. Search average orders amount for the last February");
         var averageOrderAmount = dataProcessor.searchAverageOrdersForLastMonth(
                 LocalDate.of(2022, Month.FEBRUARY, 1),
                 LocalDate.of(2022, Month.MARCH, 1));
@@ -66,8 +66,7 @@ public class Client {
         System.out.println("===============");
 
 //9. Search total orders amount per day for the last month
-
-        System.out.println("9. Search total orders amount per day for the last month");
+        System.out.println("9. Search total orders amount per day for the last February");
         var totalAmount = dataProcessor.getTotalOrderAmountPerMonth(
                 LocalDate.of(2022, Month.FEBRUARY, 1),
                 LocalDate.of(2022, Month.MARCH, 1));
