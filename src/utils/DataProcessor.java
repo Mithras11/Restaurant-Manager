@@ -2,12 +2,12 @@ package utils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import models.*;
 
-import static java.time.temporal.ChronoUnit.DAYS;
 
 public class DataProcessor {
     private final List<FoodProduct> _foodProducts;
