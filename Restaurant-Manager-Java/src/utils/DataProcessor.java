@@ -68,7 +68,7 @@ public class DataProcessor {
 
     public String getProductsWithRice() {
         _foodProducts
-                .stream()       //Contains operator for collections is case-insensitive by default
+                .stream()      //Contains operator for collections is case-insensitive by default
                 .filter(p -> p.getIngredients().contains("Rice"))
                 .forEach(p -> _sb.append(String.format("%s\n", p.getName())));
 
