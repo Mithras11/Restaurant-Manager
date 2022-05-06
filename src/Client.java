@@ -1,6 +1,6 @@
 import utils.*;
 
-import java.time.LocalDate;
+import java.time.*;
 
 public class Client {
     public static void main(String[] args) {
@@ -44,24 +44,24 @@ public class Client {
 //6. Search sold products during a period
         System.out.println("6. Search sold products during a period");
         var ordersByPeriod = dataProcessor.searchOrdersByPeriod(
-                LocalDate.of(2022, 2, 15),
-                LocalDate.of(2022, 2, 17));
+                LocalDate.of(2022, Month.FEBRUARY, 15),
+                LocalDate.of(2022, Month.FEBRUARY, 17));
         System.out.println(ordersByPeriod);
         System.out.println("===============");
 
 //7. Search sold products for the last month
         System.out.println("7. Search sold products for the last month");
         var allProducts = dataProcessor.searchProductsForLastMonth(
-                LocalDate.of(2022, 2, 15),
-                LocalDate.of(2022, 2, 28));
+                LocalDate.of(2022, Month.FEBRUARY, 15),
+                LocalDate.of(2022, Month.FEBRUARY, 28));
         System.out.println(allProducts);
         System.out.println("===============");
 
 //8. Search average orders amount for the last month
         System.out.println("8. Search average orders amount for the last month");
         var averageOrderAmount = dataProcessor.searchAverageOrdersForLastMonth(
-                LocalDate.of(2022, 0, 1),
-                LocalDate.of(2022, 0, 1));
+                LocalDate.of(2022, Month.FEBRUARY, 1),
+                LocalDate.of(2022, Month.MARCH, 1));
         System.out.printf("Average orders amount per day: %.2f\n", averageOrderAmount);
         System.out.println("===============");
 
@@ -69,8 +69,8 @@ public class Client {
 
         System.out.println("9. Search total orders amount per day for the last month");
         var totalAmount = dataProcessor.getTotalOrderAmountPerMonth(
-                LocalDate.of(2022, 0, 1),
-                LocalDate.of(2022, 0, 1));
+                LocalDate.of(2022, Month.FEBRUARY, 1),
+                LocalDate.of(2022, Month.MARCH, 1));
         System.out.println(totalAmount);
     }
 }
