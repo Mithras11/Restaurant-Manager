@@ -36,6 +36,6 @@ public class OrderLog {
     }
 
     public void setProductOrders(Collection<ProductOrder> productOrders) {
-        this._productOrders = productOrders;
+        _productOrders = productOrders;
     }
 }
